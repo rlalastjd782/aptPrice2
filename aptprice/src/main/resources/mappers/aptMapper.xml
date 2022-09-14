@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.aptboard.AptMapper">
+
+    <!-- tb_post 테이블 전체 컬럼 -->
+    <sql id="aptColumns">
+          city
+        , gun
+        , gu
+        , apt_name
+        , apt_price
+        , apt_area
+    </sql>
+
+    <!-- 도시목록 -->
+    <select id="findCity" resultType="com.board.aptboard.AptResponse">
+        SELECT distinct
+         	city
+
+        FROM
+            apt_data
+    </select>
+
+
+
+    <select id="findGun" parameterType="com.board.aptboard.AptRequest"  resultType="com.board.aptboard.AptResponse">
+        SELECT distinct
+            gun
+        FROM
+            apt_data
+            
+        <if test="city != '도/시를선택해주세요'">        
+        Where
+        	city = #{city}
+        </if>
+        	
+    </select>
+
+
+  <select id="findGu"  parameterType="com.board.aptboard.AptRequest" resultType="com.board.aptboard.AptResponse">
+        SELECT distinct
+            gu
+        FROM
+            apt_data
+        Where
+        	gun = #{gun}
+    </select>
+    
+
+   <select id="findAptName" parameterType="com.board.aptboard.AptRequest" resultType="com.board.aptboard.AptResponse">
+        SELECT distinct
+            apt_name
+        FROM
+            apt_data
+        Where
+        	gu = #{gu}
+    </select>
+    
+   
+
+    <select id="findAptArea" parameterType="com.board.aptboard.AptRequest" resultType="com.board.aptboard.AptResponse">
+        SELECT distinct
+            apt_area
+        FROM
+            apt_data
+        Where
+        	apt_name = #{aptName}
+    </select>
+    
+    
+  
+    <select id="findAptPrice"  parameterType="com.board.aptboard.AptRequest" resultType="String">
+        SELECT distinct
+            apt_price
+       	FROM
+            apt_data
+        Where
+        	apt_area = #{aptArea}
+       	AND
+       	   apt_name = #{aptName}
+
+        	
+    </select> 
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
